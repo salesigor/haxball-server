@@ -1684,14 +1684,18 @@ room.onPlayerJoin = function (player) {
     return String.fromCharCode(parseInt(v, 16));
     }).join('');
 
-   sendAnnouncementToDiscord(
-    "```"+"Informações do jogador" + "\n"+
- 
-    "🛸 Nick: " + player.name +
-    "🌐 Conn: " + player.conn  +
-    "\n" + "🔥 Auth: " + player.auth +"\n"+
-    "🌏 Ipv4: " + (ipv4) + 
-    "📅 Data: " + `${getDateInfo()}` +"```");
+    var conn = player.conn
+		var ipv4 = conn.match(/.{1,2}/g).map(function(v){
+			return String.fromCharCode(parseInt(v, 16));
+		  }).join('');
+		  sendAnnouncementToDiscord(
+			  "```"+"📝Informações do jogador, conn, auth, IP e data ⏰" + "\n"+
+	  
+		  "🛸 Nick: " + player.name + "\n" +
+		  "🌐 Conn: " + player.conn  +
+		  "\n" + "🔥 Auth:  " + player.auth + "\n"+
+		  "🌏 Ipv4: " + (ipv4) + "\n" +
+		  "📅 Data: " + `${getDateInfo()}` +"```");
 
     var randomIndex = Math.floor(Math.random() * messages.length);
     var announcement = messages[randomIndex];
