@@ -1,6 +1,6 @@
-# BurisesHaxBall
+# MalcoHaxBall
 
-r/Burises HaxBall server
+Malco HaxBall server
 
 ## Pasos levantar un server en Google Cloud
 
