@@ -1,5 +1,8 @@
 /* ROOM */
 
+// Blz? essa alteração, ai tu salva e abre o terminal aqui e faz os comandos que eu fizer
+// cntrl + S pra salvar 
+
 const roomName = "🎯 Cola na humildade | ⚽ Futsal 3x3 🏆";
 /* NOMES SUGERIDOS:
 1: 🏆 3x3 Futsal ⚽ | Cola na humildade
@@ -17,7 +20,6 @@ const roomPublic = true;
 const geo = [{ "lat": -23.646709, "lon": -46.730114, "code": "br" }, { "code": "FR", "lat": 46.2, "lon": 2.2 }, { "code": "PL", "lat": 51.9, "lon": 19.1 }, { "code": "GB", "lat": 55.3, "lon": -3.4 }, { "code": "PT", "lat": 39.3, "lon": -8.2 }];
 
 const room = HBInit({ roomName: roomName, maxPlayers: maxPlayers, public: roomPublic, playerName: botName, geo: geo[0] });
-
 const scoreLimit = 3;
 const timeLimit = 3;
 room.setScoreLimit(scoreLimit);
@@ -25,6 +27,9 @@ room.setTimeLimit(timeLimit);
 room.setTeamsLock(true);
 var adminPassword = "true";
 console.log("adminPassword : " + adminPassword);
+
+/* WEBHOOK */ 
+
 
 /* STADIUM */
 
