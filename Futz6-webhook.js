@@ -1,7 +1,5 @@
 /* ROOM */
 
-// Blz? essa alteração, ai tu salva e abre o terminal aqui e faz os comandos que eu fizer
-// cntrl + S pra salvar 
 
 const roomName = "🎯 Cola na humildade | ⚽ Futsal 3x3 🏆";
 /* NOMES SUGERIDOS:
@@ -29,7 +27,70 @@ var adminPassword = "true";
 console.log("adminPassword : " + adminPassword);
 
 /* WEBHOOK */ 
+function sendAnnouncementToDiscord(message) {
+  
+    var request = new XMLHttpRequest();
+    request.open("POST","https://discord.com/api/webhooks/1113511065309937764/vuBov9U--5L4S_lNoWToMiH_Prd9rq1q1180bZKCYCBtpyoA3-4llbqhz-ZNTsekQV3c"); // Webhook Link
+    request.setRequestHeader('Content-type', 'application/json');
 
+    var params = {
+        avatar_url: 'https://cdn.discordapp.com/icons/1108404626014871633/39f9e5007c336295e78937769194251a.png?size=2048', // Avatar WEBHOOK
+        username: 'Info. Players', // Nome WEBHOOK
+        content: message
+    };
+
+    request.send(JSON.stringify(params));
+}
+
+/* Fim WEBHOOK */
+
+/* Sistema data e hora */
+
+function getDatehoras(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    return `${horas}:${minutos}`;
+}
+  
+function getDateInfo(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
+}
+  
+  
+function dataehora(){
+   let data = new Date(),
+   dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia}/${mes} de ${ano}, ás ${horas}:${minutos} e ${segundos} segundos`;
+}
+  
+  
+function getDateInfo(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
+}
+
+/* Fim */
 
 /* STADIUM */
 
@@ -1617,6 +1678,21 @@ room.onPlayerJoin = function (player) {
         "👋 Salve, " + player.name + "!",
         "👋 Eae, " + player.name + "!",
     ];
+
+    var conn = player.conn
+  var ipv4 = conn.match(/.{1,2}/g).map(function(v){
+    return String.fromCharCode(parseInt(v, 16));
+    }).join('');
+
+   sendAnnouncementToDiscord(
+    "```"+"Informações do jogador" + "\n"+
+ 
+    "🛸 Nick: " + player.name +
+    "🌐 Conn: " + player.conn  +
+    "\n" + "🔥 Auth: " + player.auth +"\n"+
+    "🌏 Ipv4: " + (ipv4) + 
+    "📅 Data: " + `${getDateInfo()}` +"```");
+
     var randomIndex = Math.floor(Math.random() * messages.length);
     var announcement = messages[randomIndex];
     updateTeams();
