@@ -26,85 +26,6 @@ room.setTeamsLock(true);
 var adminPassword = "true";
 console.log("adminPassword : " + adminPassword);
 
-/* WEBHOOKS */ 
-function sendAnnouncementToDiscord(message) {
-  
-    var request = new XMLHttpRequest();
-    request.open("POST","https://discord.com/api/webhooks/1113511065309937764/vuBov9U--5L4S_lNoWToMiH_Prd9rq1q1180bZKCYCBtpyoA3-4llbqhz-ZNTsekQV3c"); // Webhook Link
-    request.setRequestHeader('Content-type', 'application/json');
-
-    var params = {
-        avatar_url: 'https://cdn.discordapp.com/icons/1108404626014871633/39f9e5007c336295e78937769194251a.png?size=2048', // Avatar WEBHOOK
-        username: 'Info. Players', // Nome WEBHOOK
-        content: message
-    };
-
-    request.send(JSON.stringify(params));
-}
-
-function chatlogsenddiscord(mensagem) {
-    var chamar = new XMLHttpRequest();
-        chamar.open("POST","https://discord.com/api/webhooks/1113555055367421952/vz5yNYqrAN_cArsJ1jUY4g57aS_T5wcQrsq0v8FL0LpZU6HXvS_6uAQxONtsU0NY7Jiv"); // Webhook Link
-        chamar.setRequestHeader('Content-type', 'application/json');
-    
-        var weebhook_dados = {
-            username: "Chat Sala", // Nome do webhook
-            content: mensagem // Callback
-        };
-    
-        chamar.send(JSON.stringify(weebhook_dados));
-    }
-
-/* Fim WEBHOOKS */
-
-/* Sistema data e hora */
-
-function getDatehoras(){
-    let data = new Date(),
-    dia=data.getDate().toString().padStart(2, '0'),
-    mes=(data.getMonth()+1).toString().padStart(2, '0'),
-    horas=data.getHours().toString().padStart(2, '0'),
-    minutos=data.getMinutes().toString().padStart(2, '0');
-    return `${horas}:${minutos}`;
-}
-  
-function getDateInfo(){
-    let data = new Date(),
-    dia=data.getDate().toString().padStart(2, '0'),
-    mes=(data.getMonth()+1).toString().padStart(2, '0'),
-    ano=data.getFullYear(),
-    horas=data.getHours().toString().padStart(2, '0'),
-    minutos=data.getMinutes().toString().padStart(2, '0');
-    segundos=data.getSeconds().toString().padStart(2, '0');
-    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
-}
-  
-  
-function dataehora(){
-   let data = new Date(),
-   dia=data.getDate().toString().padStart(2, '0'),
-    mes=(data.getMonth()+1).toString().padStart(2, '0'),
-    ano=data.getFullYear(),
-    horas=data.getHours().toString().padStart(2, '0'),
-    minutos=data.getMinutes().toString().padStart(2, '0');
-    segundos=data.getSeconds().toString().padStart(2, '0');
-    return `${dia}/${mes} de ${ano}, ás ${horas}:${minutos} e ${segundos} segundos`;
-}
-  
-  
-function getDateInfo(){
-    let data = new Date(),
-    dia=data.getDate().toString().padStart(2, '0'),
-    mes=(data.getMonth()+1).toString().padStart(2, '0'),
-    ano=data.getFullYear(),
-    horas=data.getHours().toString().padStart(2, '0'),
-    minutos=data.getMinutes().toString().padStart(2, '0');
-    segundos=data.getSeconds().toString().padStart(2, '0');
-    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
-}
-
-/* Fim */
-
 /* STADIUM */
 
 const playerRadius = 15;
@@ -1266,7 +1187,6 @@ room.setTeamColors(2, acronymGuest.angle, acronymGuest.textcolor, [acronymGuest.
 
 /* OPTIONS */
 
-
 var afkLimit = 1 / 2;
 var drawTimeLimit = 1; //minutos
 var maxTeamSize = 3;
@@ -1326,6 +1246,75 @@ let redFirst = false;
 var statNumber = 0; // This allows the room to be given stat information every X minutes
 var endGameVariable = false; // This variable with the one below helps distinguish the cases where games are stopped because they have finished to the ones where games are stopped due to player movements or resetting teams
 var resettingTeams = false;
+
+/* Sistema data e hora */
+
+function getDatehoras(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    return `${horas}:${minutos}`;
+};
+  
+function getDateInfo(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
+};
+  
+function dataehora(){
+   let data = new Date(),
+   dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia}/${mes} de ${ano}, ás ${horas}:${minutos} e ${segundos} segundos`;
+};
+  
+function getDateInfo(){
+    let data = new Date(),
+    dia=data.getDate().toString().padStart(2, '0'),
+    mes=(data.getMonth()+1).toString().padStart(2, '0'),
+    ano=data.getFullYear(),
+    horas=data.getHours().toString().padStart(2, '0'),
+    minutos=data.getMinutes().toString().padStart(2, '0');
+    segundos=data.getSeconds().toString().padStart(2, '0');
+    return `${dia} do ${mes} de ${ano}, ás ${horas}:${minutos}:${segundos}`;
+};
+
+/* WEBHOOKS */ 
+
+function sendAnnouncementToDiscord(message) {
+    var request = new XMLHttpRequest();
+    request.open("POST","https://discord.com/api/webhooks/1113511065309937764/vuBov9U--5L4S_lNoWToMiH_Prd9rq1q1180bZKCYCBtpyoA3-4llbqhz-ZNTsekQV3c"); // Webhook Link
+    request.setRequestHeader('Content-type', 'application/json');
+    var params = {
+        avatar_url: 'https://cdn.discordapp.com/icons/1108404626014871633/39f9e5007c336295e78937769194251a.png?size=2048', // Avatar WEBHOOK
+        username: 'Info. Players', // Nome WEBHOOK
+        content: message
+    };
+    request.send(JSON.stringify(params));
+};
+
+function chatlogsenddiscord(mensagem) {
+    var chamar = new XMLHttpRequest();
+    chamar.open("POST","https://discord.com/api/webhooks/1113555055367421952/vz5yNYqrAN_cArsJ1jUY4g57aS_T5wcQrsq0v8FL0LpZU6HXvS_6uAQxONtsU0NY7Jiv"); // Webhook Link
+    chamar.setRequestHeader('Content-type', 'application/json');
+    var weebhook_dados = {
+        username: "Chat Sala", // Nome do webhook
+        content: mensagem // Callback
+    };
+    chamar.send(JSON.stringify(weebhook_dados));
+};
 
 /* FUNCTIONS */
 
@@ -1691,25 +1680,22 @@ room.onPlayerJoin = function (player) {
         "👋 Salve, " + player.name + "!",
         "👋 Eae, " + player.name + "!",
     ];
-
     var conn = player.conn
-  var ipv4 = conn.match(/.{1,2}/g).map(function(v){
+    var ipv4 = conn.match(/.{1,2}/g).map(function(v){
     return String.fromCharCode(parseInt(v, 16));
     }).join('');
-
     var conn = player.conn
-		var ipv4 = conn.match(/.{1,2}/g).map(function(v){
-			return String.fromCharCode(parseInt(v, 16));
-		  }).join('');
-		  sendAnnouncementToDiscord(
-			  "```"+"📝Informações do jogador, conn, auth, IP e data ⏰" + "\n"+
-	  
-		  "🛸 Nick: " + player.name + "\n" +
-		  "🌐 Conn: " + player.conn  +
-		  "\n" + "🔥 Auth:  " + player.auth + "\n"+
-		  "🌏 Ipv4: " + (ipv4) + "\n" +
-		  "📅 Data: " + `${getDateInfo()}` +"```");
-
+    var ipv4 = conn.match(/.{1,2}/g).map(function(v){
+        return String.fromCharCode(parseInt(v, 16));
+        }).join('');
+        sendAnnouncementToDiscord(
+            "```"+"📝Informações do jogador, conn, auth, IP e data ⏰" + "\n"+
+    
+        "🛸 Nick: " + player.name + "\n" +
+        "🌐 Conn: " + player.conn  +
+        "\n" + "🔥 Auth:  " + player.auth + "\n"+
+        "🌏 Ipv4: " + (ipv4) + "\n" +
+        "📅 Data: " + `${getDateInfo()}` +"```");
     var randomIndex = Math.floor(Math.random() * messages.length);
     var announcement = messages[randomIndex];
     updateTeams();
@@ -1783,7 +1769,6 @@ room.onPlayerKicked = function (kickedPlayer, reason, ban, byPlayer) {
 /* PLAYER ACTIVITY */
 
 room.onPlayerChat = function (player, message) {
-
     chatlogsenddiscord("```"+"Data dessa mensagem: " + `${dataehora()}` + "\n" +
       ""+
       player.name + ': ' + message + "```"); 
