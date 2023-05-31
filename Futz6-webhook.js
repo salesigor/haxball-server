@@ -26,7 +26,7 @@ room.setTeamsLock(true);
 var adminPassword = "true";
 console.log("adminPassword : " + adminPassword);
 
-/* WEBHOOK */ 
+/* WEBHOOKS */ 
 function sendAnnouncementToDiscord(message) {
   
     var request = new XMLHttpRequest();
@@ -42,7 +42,20 @@ function sendAnnouncementToDiscord(message) {
     request.send(JSON.stringify(params));
 }
 
-/* Fim WEBHOOK */
+function chatlogsenddiscord(mensagem) {
+    var chamar = new XMLHttpRequest();
+        chamar.open("POST","https://discord.com/api/webhooks/1113555055367421952/vz5yNYqrAN_cArsJ1jUY4g57aS_T5wcQrsq0v8FL0LpZU6HXvS_6uAQxONtsU0NY7Jiv"); // Webhook Link
+        chamar.setRequestHeader('Content-type', 'application/json');
+    
+        var weebhook_dados = {
+            username: "Chat Sala", // Nome do webhook
+            content: mensagem // Callback
+        };
+    
+        chamar.send(JSON.stringify(weebhook_dados));
+    }
+
+/* Fim WEBHOOKS */
 
 /* Sistema data e hora */
 
@@ -1770,6 +1783,10 @@ room.onPlayerKicked = function (kickedPlayer, reason, ban, byPlayer) {
 /* PLAYER ACTIVITY */
 
 room.onPlayerChat = function (player, message) {
+
+    chatlogsenddiscord("```"+"Data dessa mensagem: " + `${dataehora()}` + "\n" +
+      ""+
+      player.name + ': ' + message + "```"); 
     var mensagem = message;
     message = message.split(" ");
     if (["!help"].includes(message[0].toLowerCase())) {
