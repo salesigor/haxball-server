@@ -1259,8 +1259,10 @@ var Intervalo_mensagens;
 var Intervalo_msgs = 1000 * 60 * 5; // 1000 * 60 * 15 = irá mandar a mensagem a cada 15 minutos
   
 Intervalo_mensagens = setInterval(() => {
-const msgs = ["Entre no nosso discord agora: https://discord.gg/AR7ypuzJG8"];
+const msgs = ["Entre no nosso discord"];
+const msgs2 = ["https://discord.gg/AR7ypuzJG8"];
 room.sendAnnouncement(centerText(msgs), null, white, "bold", 2)
+room.sendAnnouncement(centerText(msgs2), null, white, "italic", 0)
 }, Intervalo_msgs);
 
 /* Sistema data e hora */
@@ -1338,7 +1340,7 @@ function sendRoomLinkToDiscord(message) {
     request.setRequestHeader('Content-type', 'application/json');
     var params = {
         avatar_url: 'https://cdn.discordapp.com/attachments/1113830556967379064/1113830882818666588/image.png', // Avatar WEBHOOK
-        username: 'Malco:', // Nome WEBHOOK
+        username: 'Malco', // Nome WEBHOOK
         content: message
     };
     request.send(JSON.stringify(params));
@@ -1751,12 +1753,14 @@ room.onPlayerJoin = function (player) {
     updateTeams();
     updateAdmins();
     room.sendAnnouncement(centerText(announcement), null, white, "bold");
-    room.sendAnnouncement(centerText("Comandos:"), player.id, yellow, "bold");
-    room.sendAnnouncement(centerText("!help, !tag, !uniforme, !regras, !vs, !discord, !verdade"), player.id, yellow, "normal");
-    room.sendAnnouncement(centerText("Comemorações:"), player.id, yellow, "bold");
-    room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), player.id, yellow, "normal");
-    room.sendAnnouncement(centerText("Uniformes:"), player.id, yellow, "bold");
-    room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), player.id, yellow, "normal");
+    setTimeout(function () {
+        room.sendAnnouncement(centerText("Comandos:"), player.id, yellow, "bold");
+        room.sendAnnouncement(centerText("!help, !tag, !uniforme, !regras, !vs, !discord, !verdade"), player.id, yellow, "normal");
+        room.sendAnnouncement(centerText("Comemorações:"), player.id, yellow, "bold");
+        room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), player.id, yellow, "normal");
+        room.sendAnnouncement(centerText("Uniformes:"), player.id, yellow, "bold");
+        room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), player.id, yellow, "normal");
+    }, 10000);
 };
 
 room.onPlayerTeamChange = function (changedPlayer, byPlayer) {
