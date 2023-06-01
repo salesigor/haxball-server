@@ -1210,7 +1210,7 @@ var players;
 var teamR;
 var teamB;
 var teamS;
-const connections = ['3139312E3230392E34332E313533', '3137392E33342E38332E3634']; // admins da sala
+const connections = [/*Malco*/'3139312E3230392E34332E313533', /*Soberbo*/'3137392E33342E38332E3634']; // admins da sala
 var blacklist = [
     {Nick: "", Auth: "", Conn: ""},
     {Nick: "", Auth: "", Conn: ""}
