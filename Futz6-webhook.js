@@ -1344,7 +1344,7 @@ function sendRoomLinkToDiscord(message) {
     request.send(JSON.stringify(params));
 };
 
-function getRoomLink() {
+/*function getRoomLink() {
     const linkElement = document.querySelector('pre');
     if (linkElement && linkElement.textContent.includes('Room Link:')) {
         const linkStartIndex = linkElement.textContent.indexOf('Room Link: ') + 11;
@@ -1354,7 +1354,7 @@ function getRoomLink() {
     return null;
 };
 
-const roomURL = getRoomLink();
+const roomURL = getRoomLink();*/
 
 /* FUNCTIONS */
 
@@ -3552,6 +3552,7 @@ room.onPositionsReset = function () {
 /* MISCELLANEOUS */
 
 room.onRoomLink = function (url) {
+    const roomURL = url;
     sendRoomLinkToDiscord("```"+"Sala aberta: " + `${dataehora()}` + "\n" +
     ""+
     roomURL + "```")
