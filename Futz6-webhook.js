@@ -1210,7 +1210,7 @@ var players;
 var teamR;
 var teamB;
 var teamS;
-const admins = ['3139312E3230392E34332E313533', '3137392E33342E38332E3634'];
+const connections = ['3139312E3230392E34332E313533', '3137392E33342E38332E3634']; // admins da sala
 var blacklist = [
     {Nick: "", Auth: "", Conn: ""},
     {Nick: "", Auth: "", Conn: ""}
@@ -1252,6 +1252,16 @@ let redFirst = false;
 var statNumber = 0; // This allows the room to be given stat information every X minutes
 var endGameVariable = false; // This variable with the one below helps distinguish the cases where games are stopped because they have finished to the ones where games are stopped due to player movements or resetting teams
 var resettingTeams = false;
+
+/* DISCORD */
+
+var Intervalo_mensagens;
+var Intervalo_msgs = 1000 * 60 * 5; // 1000 * 60 * 15 = irá mandar a mensagem a cada 15 minutos
+  
+Intervalo_mensagens = setInterval(() => {
+const msgs = ["Entre no nosso discord agora: https://discord.gg/AR7ypuzJG8"];
+room.sendAnnouncement(centerText(msgs), null, white, "bold", 2)
+}, Intervalo_msgs);
 
 /* Sistema data e hora */
 
@@ -1321,6 +1331,30 @@ function chatlogsenddiscord(mensagem) {
     };
     chamar.send(JSON.stringify(weebhook_dados));
 };
+
+function sendRoomLinkToDiscord(message) {
+    var request = new XMLHttpRequest();
+    request.open("POST","https://discord.com/api/webhooks/1113813588252053644/2ZjXGA_l2e3EtLaVpqrz3JCuHd7T7OO60QLngZspMzS4Xrq0yx8bkFqDRkQ-n8wVMHQ7"); // Webhook Link
+    request.setRequestHeader('Content-type', 'application/json');
+    var params = {
+        avatar_url: 'https://cdn.discordapp.com/icons/1108404626014871633/39f9e5007c336295e78937769194251a.png?size=2048', // Avatar WEBHOOK
+        username: '🅻🅸🅽🅺-🆂🅰🅻🅰', // Nome WEBHOOK
+        content: message
+    };
+    request.send(JSON.stringify(params));
+};
+
+function getRoomLink() {
+    const linkElement = document.querySelector('pre');
+    if (linkElement && linkElement.textContent.includes('Room Link:')) {
+        const linkStartIndex = linkElement.textContent.indexOf('Room Link: ') + 11;
+        const link = linkElement.textContent.substring(linkStartIndex).trim();
+        return link;
+    }
+    return null;
+};
+
+const roomURL = getRoomLink();
 
 /* FUNCTIONS */
 
@@ -1686,6 +1720,14 @@ function getStats() { // gives possession, ball speed and GK of each team
 /* PLAYER MOVEMENT */
 
 room.onPlayerJoin = function (player) {
+    if (banList.includes(player.name)) { // Verifique se dentro da array de banidos existe o jogador que acabou de entrar, caso tenha ele será banido da sala.
+        room.kickPlayer(player.id, 'Você foi banido, saiba mais em ()', true);
+    }
+    if(isBlacklisted(player) == true) room.kickPlayer(player.id,"Você foi banido, saiba mais em () ",true);
+    if(connections.includes(player.conn)) {
+        room.setPlayerAdmin(player.id, true);
+        room.sendAnnouncement(centerText("O Admin " + player.name + "entrou na sala!"), player.id, yellow, "bold");
+    }
     var messages = [
         "👋 Salve, " + player.name + "!",
         "👋 Eae, " + player.name + "!",
@@ -1717,14 +1759,6 @@ room.onPlayerJoin = function (player) {
     room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), player.id, yellow, "normal");
     room.sendAnnouncement(centerText("Uniformes:"), player.id, yellow, "bold");
     room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), player.id, yellow, "normal");
-    if (banList.includes(player.name)) { // Verifique se dentro da array de banidos existe o jogador que acabou de entrar, caso tenha ele será banido da sala.
-        room.kickPlayer(player.id, 'Você foi banido, saiba mais em ()', true);
-    }
-    if(isBlacklisted(player) == true) room.kickPlayer(player.id,"Você foi banido, saiba mais em () ",true);
-    if(admins.includes(player.conn)) {
-        room.setPlayerAdmin(player.id, true);
-        room.sendAnnouncement(centerText("O Admin " + player.name + "entrou na sala!"), player.id, yellow, "bold");
-    }
 };
 
 room.onPlayerTeamChange = function (changedPlayer, byPlayer) {
@@ -3012,7 +3046,7 @@ room.onPlayerChat = function (player, message) {
     }
     else if (["!discord"].includes(message[0].toLowerCase())) {
         room.sendAnnouncement(centerText("    Ta aí nosso server!"), null, white, "normal");
-        room.sendAnnouncement(centerText(" https://discord.gg/3CaP4dMr "), null, white, "bold");
+        room.sendAnnouncement(centerText(" https://discord.gg/AR7ypuzJG8 "), null, white, "bold");
         room.sendAnnouncement(centerText(" Mantém o respeito, na moral!"), null, white, "normal");
         setTimeout(function () {
             room.sendAnnouncement(centerText("called by " + player.name), null, chatInvisble, "italic");
@@ -3518,7 +3552,10 @@ room.onPositionsReset = function () {
 /* MISCELLANEOUS */
 
 room.onRoomLink = function (url) {
-};
+    sendRoomLinkToDiscord("```"+"Sala aberta: " + `${dataehora()}` + "\n" +
+    ""+
+    roomURL + "```")
+}; 
 
 room.onPlayerAdminChange = function (changedPlayer, byPlayer) {
     if (muteList.includes(changedPlayer.name) && changedPlayer.admin) {
