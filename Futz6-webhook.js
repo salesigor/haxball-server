@@ -1,6 +1,6 @@
 /* ROOM */
 
-
+const botVersion = "Futz6";
 const roomName = "🎯 Cola na humildade | ⚽ Futsal 3x3 🏆";
 /* NOMES SUGERIDOS:
 1: 🏆 3x3 Futsal ⚽ | Cola na humildade
@@ -3555,10 +3555,7 @@ room.onPositionsReset = function () {
 
 room.onRoomLink = function (url) {
     const roomURL = url;
-    sendRoomLinkToDiscord("```"+"Sala aberta: " + `${dataehora()}` + "\n" +
-    ""+
-    roomURL + "```")
-}; 
+    sendRoomLinkToDiscord(botVersion + "\n" + dataehora() + "\n" + " " + "\n" + roomName + "\n" + roomURL)}; 
 
 room.onPlayerAdminChange = function (changedPlayer, byPlayer) {
     if (muteList.includes(changedPlayer.name) && changedPlayer.admin) {
