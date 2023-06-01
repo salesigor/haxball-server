@@ -25,6 +25,7 @@ room.setTimeLimit(timeLimit);
 room.setTeamsLock(true);
 var adminPassword = "true";
 console.log("adminPassword : " + adminPassword);
+token = "thr1.AAAAAGR4BqYGX1xpjWlM5Q.abVNGYI2XbQ";
 
 /* STADIUM */
 
@@ -1209,6 +1210,11 @@ var players;
 var teamR;
 var teamB;
 var teamS;
+const admins = ['3139312E3230392E34332E313533', '3137392E33342E38332E3634'];
+var blacklist = [
+    {Nick: "", Auth: "", Conn: ""},
+    {Nick: "", Auth: "", Conn: ""}
+  ];
 
 /* GAME */
 
@@ -1217,7 +1223,7 @@ var lastPlayersTouched;
 var goldenGoal = false;
 var activePlay = false;
 var muteList = [];
-var banList = ["Alcione"];
+var banList = [];
 var countAFK = false; // Created to get better track of activity
 var SMSet = new Set(); // Set created to get slow mode which is useful in chooseMode
 
@@ -1628,6 +1634,10 @@ function updateList(number, team) {
     }
 };
 
+function isBlacklisted(player){
+    return blacklist.filter(b => b.Auth == player.auth || b.Conn == player.conn).length > 0;
+};
+
 /* STATS FUNCTIONS */
 
 function getLastTouchOfTheBall() {
@@ -1707,6 +1717,14 @@ room.onPlayerJoin = function (player) {
     room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), player.id, yellow, "normal");
     room.sendAnnouncement(centerText("Uniformes:"), player.id, yellow, "bold");
     room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), player.id, yellow, "normal");
+    if (banList.includes(player.name)) { // Verifique se dentro da array de banidos existe o jogador que acabou de entrar, caso tenha ele será banido da sala.
+        room.kickPlayer(player.id, 'Você foi banido, saiba mais em ()', true);
+    }
+    if(isBlacklisted(player) == true) room.kickPlayer(player.id,"Você foi banido, saiba mais em () ",true);
+    if(admins.includes(player.conn)) {
+        room.setPlayerAdmin(player.id, true);
+        room.sendAnnouncement(centerText("O Admin " + player.name + "entrou na sala!"), player.id, yellow, "bold");
+    }
 };
 
 room.onPlayerTeamChange = function (changedPlayer, byPlayer) {
@@ -1775,14 +1793,14 @@ room.onPlayerChat = function (player, message) {
     var mensagem = message;
     message = message.split(" ");
     if (["!help"].includes(message[0].toLowerCase())) {
-        room.sendAnnouncement(centerText("Comandos:"), null, yellow, "bold");
+        room.sendAnnouncement(centerText("Comandos:"), player.id, yellow, "bold");
         room.sendAnnouncement(centerText("!help, !tag, !uniforme, !gklist, !regras, !discord, !vs, !verdade"), null, yellow, "normal");
-        room.sendAnnouncement(centerText("Comemorações:"), null, yellow, "bold");
-        room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), null, yellow, "normal");
-        room.sendAnnouncement(centerText("Uniformes:"), null, yellow, "bold");
-        room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), null, yellow, "normal");
+        room.sendAnnouncement(centerText("Comemorações:"), player.id, yellow, "bold");
+        room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), player.id, yellow, "normal");
+        room.sendAnnouncement(centerText("Uniformes:"), player.id, yellow, "bold");
+        room.sendAnnouncement(centerText("!seleçoes, !clubes, !euro, !sula"), player.id, yellow, "normal");
         setTimeout(function () {
-            room.sendAnnouncement(centerText("called by " + player.name), null, chatInvisble, "italic");
+            room.sendAnnouncement(centerText("called by " + player.name), player.id, chatInvisble, "italic");
         }, 100);
         if (player.admin) {
             room.sendAnnouncement(centerText("Admin Commands:"), player.id, yellow, "bold");
