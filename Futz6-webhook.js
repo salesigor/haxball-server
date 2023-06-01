@@ -1261,6 +1261,8 @@ var Intervalo_msgs = 1000 * 60 * 5; // 1000 * 60 * 15 = irá mandar a mensagem a
 Intervalo_mensagens = setInterval(() => {
 const msgs = ["Entre no nosso discord"];
 const msgs2 = ["https://discord.gg/AR7ypuzJG8"];
+const roomURL = url;
+sendRoomLinkToDiscord(roomName + "\n" + roomURL)
 room.sendAnnouncement(centerText(msgs), null, white, "bold", 2)
 room.sendAnnouncement(centerText(msgs2), null, white, "italic", 0)
 }, Intervalo_msgs);
@@ -1341,6 +1343,18 @@ function sendRoomLinkToDiscord(message) {
     var params = {
         avatar_url: 'https://cdn.discordapp.com/attachments/1113830556967379064/1113830882818666588/image.png', // Avatar WEBHOOK
         username: 'Malco', // Nome WEBHOOK
+        content: message
+    };
+    request.send(JSON.stringify(params));
+};
+
+function sendScoresToDiscord(message) {
+    var request = new XMLHttpRequest();
+    request.open("POST","https://discord.com/api/webhooks/1113813588252053644/2ZjXGA_l2e3EtLaVpqrz3JCuHd7T7OO60QLngZspMzS4Xrq0yx8bkFqDRkQ-n8wVMHQ7"); // Webhook Link
+    request.setRequestHeader('Content-type', 'application/json');
+    var params = {
+        avatar_url: 'https://cdn.discordapp.com/attachments/1113830556967379064/1113881527181398087/image.png', // Avatar WEBHOOK
+        username: 'Soberbo', // Nome WEBHOOK
         content: message
     };
     request.send(JSON.stringify(params));
@@ -1550,10 +1564,18 @@ function endGame(winner) { // no stopGame() function in it
         streak++;
         room.sendAnnouncement(centerText("🏆 FIM DE PARTIDA 🏆"), null, yellow, "bold");
         room.sendAnnouncement(centerText(nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest), null, white, "bold");
-        room.sendAnnouncement(centerText(+ (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
+        room.sendAnnouncement(centerText((Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
         for (var i = 0; i < 3; i++) {
             room.sendAnnouncement(docketFormat(goalsHome[i], goalsGuest[i]), null, white, "normal");
         }
+        sendScoresToDiscord("🏆 FIM DE PARTIDA 🏆" + "\n" + " " + "\n" + 
+        nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest + "\n" + 
+        (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + 
+        (Bposs * 100).toPrecision(3).toString() + "% " + "\n" + "\n" + 
+        nameHome + "| Escalação: " + teamR[0].name + teamR[1].name + teamR[2].name + "\n" + 
+        nameHome + "| gols: " + goalsHome[i] + "\n" +  "\n" + 
+        nameGuest + "| Escalação: " + teamB[0].name + teamB[1].name + teamB[2].name + "\n" +  
+        nameGuest + "| gols: " + goalsGuest[i])
         setTimeout(function () {
             room.sendAnnouncement(centerText("ATENÇÃO"), null, yellow, "bold");
             room.sendAnnouncement(centerText("Você escolhe, " + teamB[0].name), null, white, "bold");
@@ -1568,10 +1590,15 @@ function endGame(winner) { // no stopGame() function in it
         streak = 1;
         room.sendAnnouncement(centerText("🏆 FIM DE PARTIDA 🏆"), null, yellow, "bold");
         room.sendAnnouncement(centerText(nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest), null, white, "bold");
-        room.sendAnnouncement(centerText(+ (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
+        room.sendAnnouncement(centerText((Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
         for (var i = 0; i < 3; i++) {
             room.sendAnnouncement(docketFormat(goalsHome[i], goalsGuest[i]), null, white, "normal");
         }
+        sendScoresToDiscord("🏆 FIM DE PARTIDA 🏆" + "\n" + " " + "\n" + 
+        nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest + "\n" + 
+        (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + 
+        (Bposs * 100).toPrecision(3).toString() + "% " + "\n" + 
+        docketFormat(goalsHome[i], goalsGuest[i]))
         setTimeout(function () {
             room.sendAnnouncement(centerText("ATENÇÃO"), null, yellow, "bold");
             room.sendAnnouncement(centerText("Você escolhe, " + teamB[0].name), null, white, "bold");
@@ -1586,10 +1613,15 @@ function endGame(winner) { // no stopGame() function in it
         streak = 0;
         room.sendAnnouncement(centerText("💤 Limite de TEMPO! 💤"), null, yellow, "bold");
         room.sendAnnouncement(centerText(nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest), null, white, "bold");
-        room.sendAnnouncement(centerText(+ (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
+        room.sendAnnouncement(centerText((Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + (Bposs * 100).toPrecision(3).toString() + "% "), null, white, "bold");
         for (var i = 0; i < 3; i++) {
             room.sendAnnouncement(docketFormat(goalsHome[i], goalsGuest[i]), null, white, "normal");
         }
+        sendScoresToDiscord("💤 Limite de TEMPO! 💤" + "\n" + " " + "\n" + 
+        nameHome + " " + scores.red + " - " + scores.blue + " " + nameGuest + "\n" + 
+        (Rposs * 100).toPrecision(3).toString() + "% | Posse de bola | " + 
+        (Bposs * 100).toPrecision(3).toString() + "% " + "\n" + 
+        docketFormat(goalsHome[i], goalsGuest[i]))
         setTimeout(function () {
             room.sendAnnouncement(centerText("ATENÇÃO"), null, yellow, "bold");
             room.sendAnnouncement(centerText(teamR[0].name + " e " + teamB[0].name + "escolhem"), null, white, "bold");
