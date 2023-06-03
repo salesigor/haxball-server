@@ -192,7 +192,7 @@ var room = HBInit({
   
   
       function dataehora(){
-          let data = new Date(),
+          let data = new Date(),GA
           dia=data.getDate().toString().padStart(2, '0'),
           mes=(data.getMonth()+1).toString().padStart(2, '0'),
           ano=data.getFullYear(),
@@ -888,7 +888,7 @@ room.sendAnnouncement("Seja Bem-vindo(a)", player.id, Cor.Azulclaro, "normal") /
           return false;
       }
   
-  
+  jogadorPorIdgetAuth
             if (message.match(regex)) {
           room.sendAnnouncement("Sem xingamentos, por favor.", player.id, Cor.RED, Negrito, 1);
           return false;
@@ -1021,17 +1021,17 @@ room.sendAnnouncement("Seja Bem-vindo(a)", player.id, Cor.Azulclaro, "normal") /
         }
   
       if (message.substr(0, 5) == '!ban ') { // Comando para banir alguém. !ban nome
-          if (administradores.includes(player.name)) { // Verifique se o jogador tem seu nome na array de admins.
+        if (administradores.includes(player.name)) { // Verifique se o jogador tem seu nome na array de admins.
           if (banidos.includes(message.substr(5))) {
-              room.sendAnnouncement('Esse usuário já está banido!', player.id);
-          }
-          else {
-              room.sendAnnouncement('Pronto!\nUsuário banido: ' + message.substr(5), player.id, Cor.Amrelo);
-              banidos.push(message.substr(5));
-          }
-      }
-      else {
-      room.sendAnnouncement('Você não tem permissão.', player.id, Cor.RED);
+                room.sendAnnouncement('Esse usuário já está banido!', player.id);
+            }
+            else {
+                room.sendAnnouncement('Pronto!\nUsuário banido: ' + message.substr(5), player.id, Cor.Amrelo);
+                banidos.push(message.substr(5));
+            }
+        }
+        else {
+        room.sendAnnouncement('Você não tem permissão.', player.id, Cor.RED);
       }
           return false;
       }
