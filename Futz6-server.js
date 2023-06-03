@@ -1375,7 +1375,7 @@ function sendRoomLinkToDiscord(message) {
 
 function sendScoresToDiscord(message) {
     var request = new XMLHttpRequest();
-    request.open("POST","https://discord.com/api/webhooks/1113813588252053644/2ZjXGA_l2e3EtLaVpqrz3JCuHd7T7OO60QLngZspMzS4Xrq0yx8bkFqDRkQ-n8wVMHQ7"); // Webhook Link
+    request.open("POST","https://discord.com/api/webhooks/1114638025956265994/fidIiOSGdvOsMEpk-9HHjmKcyZwcWHuIbCWOxtDsJRctUxHrzFboKyTh5uAn9XBAl336"); // Webhook Link
     request.setRequestHeader('Content-type', 'application/json');
     var params = {
         avatar_url: 'https://cdn.discordapp.com/attachments/1113830556967379064/1113881527181398087/image.png', // Avatar WEBHOOK
@@ -1384,6 +1384,7 @@ function sendScoresToDiscord(message) {
     };
     request.send(JSON.stringify(params));
 };
+
 
 /* FUNCTIONS */
 
@@ -1521,13 +1522,13 @@ function blueToRedBtn() {
 function getPlayersList() {
     if (teamR.length == 1) {
         redp1 = teamR[0].name;
-        redp2 = null;
-        redp3 = null;
+        redp2 = " ";
+        redp3 = " ";
     }
     else if (teamR.length == 2) {
         redp1 = teamR[0].name;
         redp2 = teamR[1].name;
-        redp3 = null;
+        redp3 = " ";
     }
     else if (teamR.length == 3) {
         redp1 = teamR[0].name;
@@ -1536,13 +1537,13 @@ function getPlayersList() {
     }
     if (teamB.length == 1) {
         bluep1 = teamB[0].name;
-        bluep2 = null;
-        bluep3 = null;
+        bluep2 = " ";
+        bluep3 = " ";
     }
     else if (teamB.length == 2) {
         bluep1 = teamB[0].name;
         bluep2 = teamB[1].name;
-        bluep3 = null;
+        bluep3 = " ";
     }
     else if (teamB.length == 3) {
         bluep1 = teamB[0].name;
@@ -3539,13 +3540,14 @@ room.onGameStart = function (byPlayer) {
 		room.sendAnnouncement(centerText("         📢 " + nameHome + " está invicto 📢"), null, white, "normal");
 		room.sendAnnouncement(centerText("      " + streak + " jogo(s) sem perder"), null, white, "normal");
 	}
-    setTimeout(function () {
-        room.sendAnnouncement(centerText("Comandos:"), null, yellow, "bold", 0);
-        room.sendAnnouncement(centerText("!help, !tag, !uniforme, !regras, !vs, !discord, !verdade"), null, yellow, "normal", 0);
-        room.sendAnnouncement(centerText("Comemorações:"), null, yellow, "bold", 0);
-        room.sendAnnouncement(centerText("!gol, !ain, !chupa, !lenda, !smith, !gk, !me"), null, yellow, "normal", 0);
-    }, 6000);
     getPlayersList();
+    setTimeout(function () {
+        goalsRp2 = 0;
+        goalsRp3 = 0;
+        goalsBp1 = 0;
+        goalsBp2 = 0;
+        goalsBp3 = 0;
+    }, 1000);
 };
 
 room.onGameStop = function (byPlayer) {
@@ -3597,13 +3599,6 @@ room.onGameStop = function (byPlayer) {
         else {
             return null;
         }
-        setTimeout(function () {
-            goalsRp2 = 0;
-            goalsRp3 = 0;
-            goalsBp1 = 0;
-            goalsBp2 = 0;
-            goalsBp3 = 0;
-        }, 1000);
     }
 };
 
@@ -3800,9 +3795,9 @@ room.onPlayerAdminChange = function (changedPlayer, byPlayer) {
 room.onStadiumChange = function (newStadiumName, byPlayer) {
     if (byPlayer && byPlayer.id != 0) {
         room.setCustomStadium(mediumStadium);
-        room.sendAnnouncement(centerText("Você não tem autorização para alterar o mapa"), player.id, warn, "italic");
+        room.sendAnnouncement(centerText("Solicitação de mudança de mapa recusada"), null, warn, "italic");
     }
-    else {
+    else if (byPlayer && byPlayer.id == 0)  {
         var messages = [
             "Esse é o estádio que vai dar jogo.",
             "Mapa mudou, agora da jogão!",
