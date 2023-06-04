@@ -1,6 +1,6 @@
 /* ROOM */
 
-const botVersion = "Futz6";
+const botVersion = "Futz7";
 const roomName = "🎯 Cola na humildade | ⚽ Futsal 3x3 🏆";
 /* NOMES SUGERIDOS:
 1: 🏆 3x3 Futsal ⚽ | Cola na humildade
